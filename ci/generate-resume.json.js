@@ -93,12 +93,8 @@ const resumeJson = _.cloneDeep(
  * @returns An array of error objects, or null if the data is valid
  */
 async function validateResumeJson(resumeJson) {
-  const schema = await request.get({
-    url: 'http://json.schemastore.org/resume',
-    json: true,
-    headers: { Accept: '*/*' },
-  });
-
+  // load file schema
+  const schema = require(path.resolve(__dirname, '../resume-schema.json'));
   // Options provided allow draft-04 schema support
   // See https://github.com/epoberezkin/ajv/releases/tag/5.0.0
   const ajv = new Ajv({
