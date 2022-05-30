@@ -42,8 +42,11 @@ export default {
     this.commitSha = process.env.gitlabCi.commitSha;
     this.commitLink = `${process.env.gitlabCi.projectUrl}/commit/${this.commitSha}`;
 
-    setInterval(this.refreshPipelineStatus, 5000);
+    this.timeout = setInterval(this.refreshPipelineStatus, 5000);
     this.refreshPipelineStatus();
+  },
+  beforeUnmount() {
+    clearInterval(this.timeout);
   },
   methods: {
     refreshPipelineStatus() {
